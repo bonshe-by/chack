@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BONCHE LLC Verification System</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+body{margin:0;font-family:Segoe UI;background:#eef2f7}
+.header{background:#003366;color:white;padding:15px;text-align:center;position:relative}
+.logo{position:absolute;left:15px;top:8px;height:40px}
+
+.section{max-width:900px;margin:30px auto;background:white;padding:20px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);display:none;position:relative}
+
+.section::before{
+content:"";
+position:absolute;
+width:300px;
+height:300px;
+background:url('https://en.bonshe.by/wp-content/uploads/2022/12/logo.png') no-repeat center;
+background-size:contain;
+opacity:0.05;
+top:50%;left:50%;
+transform:translate(-50%,-50%);
+pointer-events:none;
+}
+
+input{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc}
+button{padding:10px 15px;background:#003366;color:white;border:none;cursor:pointer;margin-right:5px}
+.result{display:none;margin-top:20px;border-top:2px solid #003366;padding-top:15px}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+td,th{border:1px solid #ccc;padding:8px}
+
+#loading{
+display:none;
+text-align:center;
+font-size:18px;
+color:#003366;
+}
+
+.spinner{
+border:5px solid #eee;
+border-top:5px solid #003366;
+border-radius:50%;
+width:40px;height:40px;
+animation:spin 1s linear infinite;
+margin:10px auto;
+}
+@keyframes spin{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<img src="https://en.bonshe.by/wp-content/uploads/2022/12/logo.png" class="logo">
+<h2>BONCHE LLC Worker Verification System</h2>
+</div>
+
+<!-- VERIFY -->
+<div class="section" id="verifySection" style="display:block">
+
+<h3>Worker Verification</h3>
+
+<input id="passport" placeholder="Passport Number">
+<input id="permit" placeholder="Permit Number">
+<input id="dob" type="date">
+
+<button onclick="verify()">Verify</button>
+<button onclick="showAdmin()">Admin Login</button>
+
+<div id="loading">
+<div class="spinner"></div>
+Checking Verification...
+</div>
+
+<div class="result" id="resultBox">
+<h3>Worker Information</h3>
+
+<img id="photo" width="120" style="border-radius:6px;margin-bottom:10px"><br>
+
+<p><b>Full Name:</b> <span id="name"></span></p>
+<p><b>Nationality:</b> <span id="nation"></span></p>
+<p><b>Date of Birth:</b> <span id="resDob"></span></p>
+<p><b>Passport:</b> <span id="resPassport"></span></p>
+<p><b>Permit:</b> <span id="resPermit"></span></p>
+<p><b>Position:</b> <span id="position"></span></p>
+<p><b>Status:</b> Active & Verified</p>
+
+<div id="qrcode"></div>
+<br>
+<button onclick="downloadPDF()">Download PDF</button>
+
+</div>
+</div>
+
+<!-- ADMIN -->
+<div class="section" id="adminSection">
+<h3>Admin Login</h3>
+<input id="username" placeholder="Username">
+<input id="empid" placeholder="Employee ID">
+<button onclick="login()">Login</button>
+
+<div id="otpSection" style="display:none">
+<input id="otpInput" placeholder="Enter OTP">
+<button onclick="verifyOTP()">Verify OTP</button>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="section" id="dashboardSection">
+<h3>Admin Dashboard</h3>
+<button onclick="back()">Back</button>
+</div>
+
+<script>
+
+let workers=[
+{
+passport:"A07623450",
+permit:"0215592",
+dob:"2006-02-22",
+name:"MD IFTHEKHAR AHMED BHUIYAN",
+nation:"Bangladeshi",
+position:"Mushroom Grower (Cat 3)"
+}
+];
+
+function verify(){
+resultBox.style.display="none";
+loading.style.display="block";
+
+setTimeout(()=>{
+
+loading.style.display="none";
+
+let worker=workers.find(w =>
+w.passport===passport.value.trim() &&
+w.permit===permit.value.trim() &&
+w.dob===dob.value
+);
+
+if(worker){
+
+resultBox.style.display="block";
+name.innerText=worker.name;
+nation.innerText=worker.nation;
+resDob.innerText=worker.dob;
+resPassport.innerText=worker.passport;
+resPermit.innerText=worker.permit;
+position.innerText=worker.position;
+
+photo.src="https://randomuser.me/api/portraits/men/"+Math.floor(Math.random()*90)+".jpg";
+
+qrcode.innerHTML="";
+new QRCode(qrcode,{
+text:"BONCHE Verification - "+worker.name,
+width:100,height:100
+});
+
+}else{
+alert("No Record Found");
+}
+
+},1500);
+}
+
+function downloadPDF(){
+html2pdf().from(resultBox).save("verification.pdf");
+}
+
+function showAdmin(){
+verifySection.style.display="none";
+adminSection.style.display="block";
+}
+
+function login(){
+otpSection.style.display="block";
+}
+
+function verifyOTP(){
+if(otpInput.value==="540663"){
+adminSection.style.display="none";
+dashboardSection.style.display="block";
+}else{
+alert("Invalid OTP");
+}
+}
+
+function back(){
+dashboardSection.style.display="none";
+verifySection.style.display="block";
+}
+
+</script>
+</body>
+</html>
