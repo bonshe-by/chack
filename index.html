@@ -8,195 +8,1056 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
-body{margin:0;font-family:Segoe UI;background:#eef2f7}
-.header{background:#003366;color:white;padding:15px;text-align:center;position:relative}
-.logo{position:absolute;left:15px;top:8px;height:40px}
-
-.section{max-width:900px;margin:30px auto;background:white;padding:20px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);display:none;position:relative}
-
-.section::before{
-content:"";
-position:absolute;
-width:300px;
-height:300px;
-background:url('https://en.bonshe.by/wp-content/uploads/2022/12/logo.png') no-repeat center;
-background-size:contain;
-opacity:0.05;
-top:50%;left:50%;
-transform:translate(-50%,-50%);
-pointer-events:none;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-input{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ccc}
-button{padding:10px 15px;background:#003366;color:white;border:none;cursor:pointer;margin-right:5px}
-.result{display:none;margin-top:20px;border-top:2px solid #003366;padding-top:15px}
-table{width:100%;border-collapse:collapse;margin-top:15px}
-td,th{border:1px solid #ccc;padding:8px}
-
-#loading{
-display:none;
-text-align:center;
-font-size:18px;
-color:#003366;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.spinner{
-border:5px solid #eee;
-border-top:5px solid #003366;
-border-radius:50%;
-width:40px;height:40px;
-animation:spin 1s linear infinite;
-margin:10px auto;
+/* Header Styles */
+.header {
+    background: linear-gradient(135deg, #003366 0%, #004080 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    animation: slideDown 0.8s ease-out;
 }
-@keyframes spin{
-0%{transform:rotate(0deg)}
-100%{transform:rotate(360deg)}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.logo {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 50px;
+    background: white;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        transform: translateY(-50%) scale(1.05);
+    }
+    100% {
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+.header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+}
+
+/* Section Styles */
+.section {
+    max-width: 900px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    display: none;
+    position: relative;
+    overflow: hidden;
+    animation: scaleIn 0.5s ease-out;
+    transform-origin: center;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.section::before {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: url('https://en.bonshe.by/wp-content/uploads/2022/12/logo.png') no-repeat center;
+    background-size: contain;
+    opacity: 0.03;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.section h3 {
+    color: #003366;
+    font-size: 28px;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.section h3::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: -100%;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #667eea, transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        left: 100%;
+    }
+}
+
+/* Input Styles */
+input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s;
+    animation: fadeInUp 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+input:nth-child(1) { animation-delay: 0.1s; }
+input:nth-child(2) { animation-delay: 0.2s; }
+input:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+    transform: translateY(-2px);
+}
+
+/* Button Styles */
+button {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #003366 0%, #004080 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, #004080 0%, #0050a0 100%);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Result Box Styles */
+.result {
+    display: none;
+    margin-top: 25px;
+    border-top: 3px solid #667eea;
+    padding-top: 20px;
+    animation: slideUpFade 0.5s ease-out;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Photo Styles */
+#photo {
+    border-radius: 50%;
+    border: 3px solid #667eea;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Worker Info Grid */
+.worker-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.info-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+    animation: slideInRight 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+.info-item:nth-child(1) { animation-delay: 0.1s; }
+.info-item:nth-child(2) { animation-delay: 0.2s; }
+.info-item:nth-child(3) { animation-delay: 0.3s; }
+.info-item:nth-child(4) { animation-delay: 0.4s; }
+.info-item:nth-child(5) { animation-delay: 0.5s; }
+.info-item:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.info-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+/* QR Code Styles */
+#qrcode {
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    animation: rotateIn 0.8s ease-out;
+}
+
+@keyframes rotateIn {
+    from {
+        opacity: 0;
+        transform: rotate(-180deg) scale(0.3);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+    }
+}
+
+/* Loading Spinner */
+#loading, #otpLoading {
+    display: none;
+    text-align: center;
+    font-size: 18px;
+    color: #003366;
+    margin: 20px 0;
+}
+
+.spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #667eea;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 15px auto;
+}
+
+.pulse-loader {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Print Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    #resultBox, #resultBox * {
+        visibility: visible;
+    }
+    
+    #resultBox {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 20px;
+        background: white;
+        box-shadow: none;
+    }
+    
+    .header, button, #qrcode {
+        display: none !important;
+    }
+    
+    #photo {
+        border: 2px solid #000;
+    }
+}
+
+/* Print-specific card style */
+.print-card {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #003366;
+    border-radius: 15px;
+    background: white;
+}
+
+/* OTP Section */
+#otpSection {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    animation: slideInDown 0.5s ease-out;
+    border: 1px solid #dee2e6;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Message Container */
+.message-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.message-container p {
+    margin: 15px 0;
+    color: #003366;
+    font-size: 16px;
+    animation: pulse 2s infinite;
+}
+
+/* Success Animation */
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.success-icon {
+    color: #28a745;
+    font-size: 48px;
+    animation: checkmark 0.5s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .worker-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .header h2 {
+        font-size: 18px;
+    }
+    
+    .logo {
+        height: 35px;
+    }
+    
+    button {
+        width: 100%;
+        margin-right: 0;
+    }
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-<img src="https://en.bonshe.by/wp-content/uploads/2022/12/logo.png" class="logo">
-<h2>BONCHE LLC Worker Verification System</h2>
+    <img src="https://en.bonshe.by/wp-content/uploads/2022/12/logo.png" class="logo">
+    <h2>BONCHE LLC Worker Verification System</h2>
 </div>
 
-<!-- VERIFY -->
+<!-- VERIFY SECTION -->
 <div class="section" id="verifySection" style="display:block">
+    <h3>🔍 Worker Verification</h3>
+    
+    <input id="passport" placeholder="Passport Number" autocomplete="off">
+    <input id="permit" placeholder="Permit Number" autocomplete="off">
+    <input id="dob" type="date" placeholder="Date of Birth">
+    
+    <button onclick="verify()">Verify Worker</button>
+    <button onclick="showAdmin()">Admin Login</button>
 
-<h3>Worker Verification</h3>
+    <div id="loading">
+        <div class="spinner"></div>
+        <p class="pulse-loader">Checking Verification System...</p>
+    </div>
 
-<input id="passport" placeholder="Passport Number">
-<input id="permit" placeholder="Permit Number">
-<input id="dob" type="date">
-
-<button onclick="verify()">Verify</button>
-<button onclick="showAdmin()">Admin Login</button>
-
-<div id="loading">
-<div class="spinner"></div>
-Checking Verification...
+    <div class="result" id="resultBox">
+        <div class="print-card">
+            <h3 style="text-align: center; color: #003366;">✅ Verified Worker Information</h3>
+            
+            <div style="text-align: center;">
+                <img id="photo" width="120" style="border-radius:50%; border: 3px solid #003366;">
+            </div>
+            
+            <div class="worker-info">
+                <div class="info-item">
+                    <label>Full Name</label>
+                    <span id="name"></span>
+                </div>
+                <div class="info-item">
+                    <label>Nationality</label>
+                    <span id="nation"></span>
+                </div>
+                <div class="info-item">
+                    <label>Date of Birth</label>
+                    <span id="resDob"></span>
+                </div>
+                <div class="info-item">
+                    <label>Passport Number</label>
+                    <span id="resPassport"></span>
+                </div>
+                <div class="info-item">
+                    <label>Permit Number</label>
+                    <span id="resPermit"></span>
+                </div>
+                <div class="info-item">
+                    <label>Position</label>
+                    <span id="position"></span>
+                </div>
+            </div>
+            
+            <p style="color: #28a745; font-weight: bold; text-align: center; font-size: 18px;">
+                ✓ Status: Active & Verified
+            </p>
+            
+            <div style="text-align: center;">
+                <div id="qrcode"></div>
+                <p style="font-size: 12px; color: #666; margin-top: 5px;">Scan to verify</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #999;">
+                BONCHE LLC • Official Verification Document
+            </div>
+        </div>
+        
+        <br>
+        <button onclick="downloadPDF()">📥 Download PDF</button>
+        <button onclick="printIDCard()">🖨️ Print ID Card</button>
+    </div>
 </div>
 
-<div class="result" id="resultBox">
-<h3>Worker Information</h3>
-
-<img id="photo" width="120" style="border-radius:6px;margin-bottom:10px"><br>
-
-<p><b>Full Name:</b> <span id="name"></span></p>
-<p><b>Nationality:</b> <span id="nation"></span></p>
-<p><b>Date of Birth:</b> <span id="resDob"></span></p>
-<p><b>Passport:</b> <span id="resPassport"></span></p>
-<p><b>Permit:</b> <span id="resPermit"></span></p>
-<p><b>Position:</b> <span id="position"></span></p>
-<p><b>Status:</b> Active & Verified</p>
-
-<div id="qrcode"></div>
-<br>
-<button onclick="downloadPDF()">Download PDF</button>
-
-</div>
-</div>
-
-<!-- ADMIN -->
+<!-- ADMIN LOGIN SECTION -->
 <div class="section" id="adminSection">
-<h3>Admin Login</h3>
-<input id="username" placeholder="Username">
-<input id="empid" placeholder="Employee ID">
-<button onclick="login()">Login</button>
-
-<div id="otpSection" style="display:none">
-<input id="otpInput" placeholder="Enter OTP">
-<button onclick="verifyOTP()">Verify OTP</button>
+    <h3>🔐 Admin Login</h3>
+    
+    <input id="username" placeholder="Enter Username" autocomplete="off">
+    <input id="password" type="password" placeholder="Enter Password" autocomplete="off">
+    <button onclick="login()">Login</button>
+    <button onclick="backToVerify()">⬅️ Back</button>
+    
+    <div id="otpSection" style="display:none">
+        <div id="otpLoading">
+            <div class="spinner"></div>
+            <div class="message-container">
+                <p>📱 Sending OTP to registered mobile number...</p>
+                <p style="font-size: 14px; color: #666;">Please wait while we verify your identity</p>
+            </div>
+        </div>
+        <div id="otpInputSection" style="display:none">
+            <h4 style="color: #003366; margin-bottom: 15px;">OTP Verification</h4>
+            <p style="margin-bottom: 15px; color: #666;">Enter the 6-digit code sent to your phone</p>
+            <input id="otpInput" placeholder="Enter 6-digit OTP" maxlength="6">
+            <button onclick="verifyOTP()">Verify OTP</button>
+            <button onclick="resendOTP()" style="background: #6c757d;">Resend OTP</button>
+        </div>
+    </div>
 </div>
-</div>
 
-<!-- DASHBOARD -->
+<!-- DASHBOARD SECTION -->
 <div class="section" id="dashboardSection">
-<h3>Admin Dashboard</h3>
-<button onclick="back()">Back</button>
+    <h3>📊 Admin Dashboard</h3>
+    
+    <div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center; animation: slideInDown 0.5s ease-out;">
+        <div style="font-size: 48px; margin-bottom: 10px;" class="success-icon">✓</div>
+        <h4>Welcome, Admin!</h4>
+        <p>You have successfully logged in</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+        <div class="info-item">
+            <label>Total Verifications</label>
+            <span>1,247</span>
+        </div>
+        <div class="info-item">
+            <label>Today's Verifications</label>
+            <span>24</span>
+        </div>
+        <div class="info-item">
+            <label>Active Workers</label>
+            <span>10</span>
+        </div>
+        <div class="info-item">
+            <label>Pending Requests</label>
+            <span>3</span>
+        </div>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <h4>Recent Activities</h4>
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+            <p>• 10:30 AM - Verification for Passport: A07623450</p>
+            <p>• 10:15 AM - Verification for Passport: B12345678</p>
+            <p>• 09:45 AM - Verification for Passport: C87654321</p>
+            <p>• 09:20 AM - Admin Login from IP: 192.168.1.100</p>
+        </div>
+    </div>
+    
+    <button onclick="backToVerify()">⬅️ Back to Verification</button>
+    <button onclick="logout()">🚪 Logout</button>
 </div>
 
 <script>
-
-let workers=[
-{
-passport:"A07623450",
-permit:"0215592",
-dob:"2006-02-22",
-name:"MD IFTHEKHAR AHMED BHUIYAN",
-nation:"Bangladeshi",
-position:"Mushroom Grower (Cat 3)"
-}
+// 10 Workers Data
+let workers = [
+    {
+        passport: "A07623450",
+        permit: "0215592",
+        dob: "2006-02-22",
+        name: "MD IFTHEKHAR AHMED BHUIYAN",
+        nation: "Bangladeshi",
+        position: "Mushroom Grower (Cat 3)",
+        photo: "1"
+    },
+    {
+        passport: "B12345678",
+        permit: "0215593",
+        dob: "1995-05-15",
+        name: "MD KAMAL HOSSAIN",
+        nation: "Bangladeshi",
+        position: "Farm Supervisor",
+        photo: "2"
+    },
+    {
+        passport: "C87654321",
+        permit: "0215594",
+        dob: "1992-08-10",
+        name: "MD SHAHIDUL ISLAM",
+        nation: "Bangladeshi",
+        position: "Quality Controller",
+        photo: "3"
+    },
+    {
+        passport: "D23456789",
+        permit: "0215595",
+        dob: "1998-03-25",
+        name: "MD JAHANGIR ALAM",
+        nation: "Bangladeshi",
+        position: "Harvesting Specialist",
+        photo: "4"
+    },
+    {
+        passport: "E34567890",
+        permit: "0215596",
+        dob: "1993-11-30",
+        name: "MD ROFIQUL ISLAM",
+        nation: "Bangladeshi",
+        position: "Packing Supervisor",
+        photo: "5"
+    },
+    {
+        passport: "F45678901",
+        permit: "0215597",
+        dob: "1996-07-18",
+        name: "MD ABDUL KARIM",
+        nation: "Bangladeshi",
+        position: "Mushroom Cultivator",
+        photo: "6"
+    },
+    {
+        passport: "G56789012",
+        permit: "0215598",
+        dob: "1991-09-05",
+        name: "MD NURUL ISLAM",
+        nation: "Bangladeshi",
+        position: "Irrigation Specialist",
+        photo: "7"
+    },
+    {
+        passport: "H67890123",
+        permit: "0215599",
+        dob: "1994-12-12",
+        name: "MD FARUK HOSSAIN",
+        nation: "Bangladeshi",
+        position: "Equipment Operator",
+        photo: "8"
+    },
+    {
+        passport: "I78901234",
+        permit: "0215600",
+        dob: "1997-04-20",
+        name: "MD BILLAL HOSSAIN",
+        nation: "Bangladeshi",
+        position: "Maintenance Technician",
+        photo: "9"
+    },
+    {
+        passport: "J89012345",
+        permit: "0215601",
+        dob: "1990-10-08",
+        name: "MD MOSTAFIZUR RAHMAN",
+        nation: "Bangladeshi",
+        position: "Senior Farm Manager",
+        photo: "10"
+    }
 ];
 
-function verify(){
-resultBox.style.display="none";
-loading.style.display="block";
+function verify() {
+    const resultBox = document.getElementById('resultBox');
+    const loading = document.getElementById('loading');
+    
+    resultBox.style.display = "none";
+    loading.style.display = "block";
 
-setTimeout(()=>{
+    setTimeout(() => {
+        loading.style.display = "none";
 
-loading.style.display="none";
+        let worker = workers.find(w =>
+            w.passport === document.getElementById('passport').value.trim() &&
+            w.permit === document.getElementById('permit').value.trim() &&
+            w.dob === document.getElementById('dob').value
+        );
 
-let worker=workers.find(w =>
-w.passport===passport.value.trim() &&
-w.permit===permit.value.trim() &&
-w.dob===dob.value
-);
+        if (worker) {
+            resultBox.style.display = "block";
+            
+            document.getElementById('name').innerText = worker.name;
+            document.getElementById('nation').innerText = worker.nation;
+            document.getElementById('resDob').innerText = worker.dob;
+            document.getElementById('resPassport').innerText = worker.passport;
+            document.getElementById('resPermit').innerText = worker.permit;
+            document.getElementById('position').innerText = worker.position;
 
-if(worker){
+            document.getElementById('photo').src = "https://randomuser.me/api/portraits/men/" + 
+                (parseInt(worker.photo) + 20) + ".jpg";
 
-resultBox.style.display="block";
-name.innerText=worker.name;
-nation.innerText=worker.nation;
-resDob.innerText=worker.dob;
-resPassport.innerText=worker.passport;
-resPermit.innerText=worker.permit;
-position.innerText=worker.position;
-
-photo.src="https://randomuser.me/api/portraits/men/"+Math.floor(Math.random()*90)+".jpg";
-
-qrcode.innerHTML="";
-new QRCode(qrcode,{
-text:"BONCHE Verification - "+worker.name,
-width:100,height:100
-});
-
-}else{
-alert("No Record Found");
+            const qrcodeDiv = document.getElementById('qrcode');
+            qrcodeDiv.innerHTML = "";
+            new QRCode(qrcodeDiv, {
+                text: `BONCHE VERIFICATION\nName: ${worker.name}\nPassport: ${worker.passport}\nPermit: ${worker.permit}`,
+                width: 120,
+                height: 120
+            });
+            
+            // Scroll to result
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            alert("❌ No Record Found. Please check your credentials.");
+        }
+    }, 1500);
 }
 
-},1500);
+function downloadPDF() {
+    const element = document.getElementById('resultBox');
+    const opt = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        filename: 'verification-card.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, letterRendering: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
 }
 
-function downloadPDF(){
-html2pdf().from(resultBox).save("verification.pdf");
+function printIDCard() {
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank');
+    
+    // Get the result content
+    const name = document.getElementById('name').innerText;
+    const nation = document.getElementById('nation').innerText;
+    const dob = document.getElementById('resDob').innerText;
+    const passport = document.getElementById('resPassport').innerText;
+    const permit = document.getElementById('resPermit').innerText;
+    const position = document.getElementById('position').innerText;
+    const photoSrc = document.getElementById('photo').src;
+    const qrCodeHtml = document.getElementById('qrcode').innerHTML;
+    
+    // Create print content
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>BONCHE LLC - ID Card</title>
+            <style>
+                body {
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    margin: 0;
+                    padding: 20px;
+                    background: #f0f0f0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                }
+                .id-card {
+                    max-width: 350px;
+                    background: white;
+                    border: 3px solid #003366;
+                    border-radius: 20px;
+                    padding: 25px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                }
+                .header {
+                    text-align: center;
+                    border-bottom: 2px solid #003366;
+                    padding-bottom: 15px;
+                    margin-bottom: 15px;
+                }
+                .header h2 {
+                    color: #003366;
+                    margin: 0;
+                    font-size: 20px;
+                }
+                .header p {
+                    color: #666;
+                    margin: 5px 0 0;
+                    font-size: 12px;
+                }
+                .photo {
+                    text-align: center;
+                    margin: 15px 0;
+                }
+                .photo img {
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                    border: 3px solid #003366;
+                }
+                .info {
+                    margin: 15px 0;
+                }
+                .info-row {
+                    margin: 8px 0;
+                    padding: 5px;
+                    background: #f8f9fa;
+                    border-radius: 5px;
+                }
+                .label {
+                    font-size: 12px;
+                    color: #666;
+                    display: block;
+                }
+                .value {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #003366;
+                }
+                .qr-code {
+                    text-align: center;
+                    margin: 15px 0;
+                    padding: 10px;
+                    background: white;
+                }
+                .footer {
+                    text-align: center;
+                    font-size: 10px;
+                    color: #999;
+                    border-top: 1px solid #ddd;
+                    padding-top: 10px;
+                }
+                .status {
+                    color: #28a745;
+                    font-weight: bold;
+                    text-align: center;
+                    font-size: 16px;
+                    margin: 10px 0;
+                }
+                @media print {
+                    body {
+                        background: white;
+                        padding: 0;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="id-card">
+                <div class="header">
+                    <h2>BONCHE LLC</h2>
+                    <p>Worker Identification Card</p>
+                </div>
+                
+                <div class="photo">
+                    <img src="${photoSrc}" alt="Worker Photo">
+                </div>
+                
+                <div class="info">
+                    <div class="info-row">
+                        <span class="label">Full Name</span>
+                        <span class="value">${name}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Nationality</span>
+                        <span class="value">${nation}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Date of Birth</span>
+                        <span class="value">${dob}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Passport Number</span>
+                        <span class="value">${passport}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Permit Number</span>
+                        <span class="value">${permit}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Position</span>
+                        <span class="value">${position}</span>
+                    </div>
+                </div>
+                
+                <div class="status">✓ Active & Verified</div>
+                
+                <div class="qr-code">
+                    ${qrCodeHtml}
+                </div>
+                
+                <div class="footer">
+                    BONCHE LLC • Official Verification Document<br>
+                    Valid until: December 2026
+                </div>
+            </div>
+            <script>
+                window.onload = function() {
+                    window.print();
+                }
+            <\/script>
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
 }
 
-function showAdmin(){
-verifySection.style.display="none";
-adminSection.style.display="block";
+function showAdmin() {
+    document.getElementById('verifySection').style.display = "none";
+    document.getElementById('adminSection').style.display = "block";
+    
+    // Clear input fields
+    document.getElementById('username').value = "";
+    document.getElementById('password').value = "";
 }
 
-function login(){
-otpSection.style.display="block";
+function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // Hardcoded credentials for demo
+    if (username === "mahrahi13" && password === "AmarAirtel*1#") {
+        document.getElementById('otpSection').style.display = "block";
+        document.getElementById('otpLoading').style.display = "block";
+        document.getElementById('otpInputSection').style.display = "none";
+        
+        // Simulate OTP sending with loading animation
+        setTimeout(() => {
+            document.getElementById('otpLoading').style.display = "none";
+            document.getElementById('otpInputSection').style.display = "block";
+        }, 2500);
+    } else {
+        alert("❌ Invalid username or password!");
+    }
 }
 
-function verifyOTP(){
-if(otpInput.value==="540663"){
-adminSection.style.display="none";
-dashboardSection.style.display="block";
-}else{
-alert("Invalid OTP");
-}
-}
-
-function back(){
-dashboardSection.style.display="none";
-verifySection.style.display="block";
+function verifyOTP() {
+    const otpInput = document.getElementById('otpInput');
+    
+    if (otpInput.value === "540663") {
+        document.getElementById('adminSection').style.display = "none";
+        document.getElementById('dashboardSection').style.display = "block";
+    } else {
+        alert("❌ Invalid OTP. Please try again.");
+    }
 }
 
+function resendOTP() {
+    document.getElementById('otpInputSection').style.display = "none";
+    document.getElementById('otpLoading').style.display = "block";
+    
+    setTimeout(() => {
+        document.getElementById('otpLoading').style.display = "none";
+        document.getElementById('otpInputSection').style.display = "block";
+        alert("✅ A new OTP has been sent to your registered mobile number.");
+    }, 2000);
+}
+
+function backToVerify() {
+    document.getElementById('dashboardSection').style.display = "none";
+    document.getElementById('adminSection').style.display = "none";
+    document.getElementById('verifySection').style.display = "block";
+}
+
+function logout() {
+    document.getElementById('dashboardSection').style.display = "none";
+    document.getElementById('verifySection').style.display = "block";
+    
+    // Reset OTP section
+    document.getElementById('otpSection').style.display = "none";
+    document.getElementById('otpLoading').style.display = "none";
+    document.getElementById('otpInputSection').style.display = "none";
+    document.getElementById('otpInput').value = "";
+}
+
+// Clear inputs on page load
+window.onload = function() {
+    document.getElementById('passport').value = "";
+    document.getElementById('permit').value = "";
+    document.getElementById('dob').value = "";
+    document.getElementById('username').value = "";
+    document.getElementById('password').value = "";
+};
 </script>
 </body>
 </html>
