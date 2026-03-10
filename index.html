@@ -398,6 +398,40 @@ button:active {
     50% { opacity: 0.5; }
 }
 
+/* Download Link Styles */
+.download-link-container {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 2px dashed #667eea;
+    text-align: center;
+}
+
+.download-link {
+    display: inline-block;
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    margin: 10px 0;
+    transition: all 0.3s;
+    animation: pulse 2s infinite;
+}
+
+.download-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.download-info {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+}
+
 /* Print Styles */
 @media print {
     body * {
@@ -418,7 +452,7 @@ button:active {
         box-shadow: none;
     }
     
-    .header, button, #qrcode {
+    .header, button, #qrcode, .download-link-container {
         display: none !important;
     }
     
@@ -571,6 +605,15 @@ button:active {
                 </div>
             </div>
             
+            <!-- Download Link Section -->
+            <div class="download-link-container" id="downloadLinkContainer">
+                <h4 style="color: #003366; margin-bottom: 10px;">📥 Download Verification Document</h4>
+                <a href="#" id="dynamicDownloadLink" class="download-link" target="_blank">Click Here to Download</a>
+                <div class="download-info">
+                    <span id="downloadFileInfo"></span>
+                </div>
+            </div>
+            
             <p style="color: #28a745; font-weight: bold; text-align: center; font-size: 18px;">
                 ✓ Status: Active & Verified
             </p>
@@ -671,7 +714,8 @@ let workers = [
         name: "MD FOYSAL",
         nation: "Bangladeshi",
         position: "Mushroom Grower (Cat 3)",
-        photo: "https://images.unsplash.com/vector-1773100292989-502eab2926f3?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        photo: "https://images.unsplash.com/vector-1773100292989-502eab2926f3?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        downloadLink: "https://drive.google.com/uc?export=download&id=1ZDWXcOGlRN2xuPiJGdn1FHqW0cZFtHmL"
     },
     {
         passport: "A18662134",
@@ -680,7 +724,8 @@ let workers = [
         name: "MOHIN UDDIN",
         nation: "Bangladeshi",
         position: "Mushroom Grower (Cat 3)",
-        photo: "https://images.unsplash.com/vector-1773100461591-ee5660940d7b?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        photo: "https://images.unsplash.com/vector-1773100461591-ee5660940d7b?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        downloadLink: "https://drive.google.com/uc?export=download&id=19kOZyIoDxHZavfog4kljF91yPpKdcEJx"
     },
     {
         passport: "A01020480",
@@ -689,7 +734,8 @@ let workers = [
         name: "RAJON KHAN",
         nation: "Bangladeshi",
         position: "Mushroom Grower (Cat 3)",
-        photo: "https://images.unsplash.com/vector-1773100136168-9a729801cb4a?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        photo: "https://images.unsplash.com/vector-1773100136168-9a729801cb4a?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        downloadLink: "https://drive.google.com/uc?export=download&id=1XULQ_LdPlTmTyfr_BLazXNyn1mXLSqIX"
     },
     {
         passport: "D23456789",
@@ -698,7 +744,8 @@ let workers = [
         name: "MD JAHANGIR ALAM",
         nation: "Bangladeshi",
         position: "Harvesting Specialist",
-        photo: "https://images.unsplash.com-1506794778202-pad96-9f0c6b?w=150&h=150&fit=crop"
+        photo: "https://images.unsplash.com-1506794778202-pad96-9f0c6b?w=150&h=150&fit=crop",
+        downloadLink: "https://yourdomain.com/downloads/worker4.pdf"
     },
     {
         passport: "E34567890",
@@ -707,7 +754,8 @@ let workers = [
         name: "MD ROFIQUL ISLAM",
         nation: "Bangladeshi",
         position: "Packing Supervisor",
-        photo: "https://images.unsplash-1519085360753-af7439de79d5?w=150&h=150&fit=crop"
+        photo: "https://images.unsplash-1519085360753-af7439de79d5?w=150&h=150&fit=crop",
+        downloadLink: "https://yourdomain.com/downloads/worker5.pdf"
     },
     {
         passport: "F45678901",
@@ -716,7 +764,8 @@ let workers = [
         name: "MD ABDUL KARIM",
         nation: "Bangladeshi",
         position: "Mushroom Cultivator",
-        photo: "https://images.unsplash-1504257432389-52343af06e19?w=150&h=150&fit=crop"
+        photo: "https://images.unsplash-1504257432389-52343af06e19?w=150&h=150&fit=crop",
+        downloadLink: "https://yourdomain.com/downloads/worker6.pdf"
     },
     {
         passport: "G56789012",
@@ -725,7 +774,8 @@ let workers = [
         name: "MD NURUL ISLAM",
         nation: "Bangladeshi",
         position: "Irrigation Specialist",
-        photo: "https://images.unsplash-1500648767791-00dcc994a43e?w=150&h=150&fit=crop"
+        photo: "https://images.unsplash-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
+        downloadLink: "https://yourdomain.com/downloads/worker7.pdf"
     },
     {
         passport: "H67890123",
@@ -734,7 +784,8 @@ let workers = [
         name: "MD FARUK HOSSAIN",
         nation: "Bangladeshi",
         position: "Equipment Operator",
-        photo: "https://images.unsplash-1492562080023-ab3db95bf3ce?w=150&h=150&fit=crop"
+        photo: "https://images.unsplash-1492562080023-ab3db95bf3ce?w=150&h=150&fit=crop",
+        downloadLink: "https://yourdomain.com/downloads/worker8.pdf"
     },
     {
         passport: "I78901234",
@@ -743,7 +794,8 @@ let workers = [
         name: "MD BILLAL HOSSAIN",
         nation: "Bangladeshi",
         position: "Maintenance Technician",
-        photo: "https://images.unsplash-1501196353491-d1fbeb0aac30?w=150&h=150&fit=crop"
+        photo: "https://images.unsplash-1501196353491-d1fbeb0aac30?w=150&h=150&fit=crop",
+        downloadLink: "https://yourdomain.com/downloads/worker9.pdf"
     },
     {
         passport: "J89012345",
@@ -752,7 +804,8 @@ let workers = [
         name: "MD MOSTAFIZUR RAHMAN",
         nation: "Bangladeshi",
         position: "Senior Farm Manager",
-        photo: "https://images.unsplash-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
+        photo: "https://images.unsplash-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
+        downloadLink: "https://yourdomain.com/downloads/worker10.pdf"
     }
 ];
 
@@ -785,10 +838,17 @@ function verify() {
             // Set the direct photo URL
             document.getElementById('photo').src = worker.photo;
 
+            // Set the dynamic download link
+            const downloadLink = document.getElementById('dynamicDownloadLink');
+            downloadLink.href = worker.downloadLink;
+            
+            // Update download file info
+            document.getElementById('downloadFileInfo').innerHTML = `📄 File: ${worker.name.replace(/\s+/g, '_')}_Verification.pdf`;
+
             const qrcodeDiv = document.getElementById('qrcode');
             qrcodeDiv.innerHTML = "";
             new QRCode(qrcodeDiv, {
-                text: `BONCHE VERIFICATION\nName: ${worker.name}\nPassport: ${worker.passport}\nPermit: ${worker.permit}`,
+                text: `BONCHE VERIFICATION\nName: ${worker.name}\nPassport: ${worker.passport}\nPermit: ${worker.permit}\nDownload: ${worker.downloadLink}`,
                 width: 120,
                 height: 120
             });
@@ -826,6 +886,7 @@ function printIDCard() {
     const position = document.getElementById('position').innerText;
     const photoSrc = document.getElementById('photo').src;
     const qrCodeHtml = document.getElementById('qrcode').innerHTML;
+    const downloadLink = document.getElementById('dynamicDownloadLink').href;
     
     // Create print content
     printWindow.document.write(`
@@ -917,6 +978,14 @@ function printIDCard() {
                     font-size: 16px;
                     margin: 10px 0;
                 }
+                .download-info {
+                    text-align: center;
+                    margin: 10px 0;
+                    padding: 10px;
+                    background: #f8f9fa;
+                    border-radius: 5px;
+                    font-size: 12px;
+                }
                 @media print {
                     body {
                         background: white;
@@ -964,6 +1033,11 @@ function printIDCard() {
                 </div>
                 
                 <div class="status">✓ Active & Verified</div>
+                
+                <div class="download-info">
+                    <strong>Download Document:</strong><br>
+                    <a href="${downloadLink}" style="color: #28a745;">${name.replace(/\s+/g, '_')}_Verification.pdf</a>
+                </div>
                 
                 <div class="qr-code">
                     ${qrCodeHtml}
