@@ -288,6 +288,9 @@ button:active {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     margin-bottom: 15px;
     animation: float 3s ease-in-out infinite;
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
 }
 
 @keyframes float {
@@ -538,7 +541,7 @@ button:active {
             <h3 style="text-align: center; color: #003366;">✅ Verified Worker Information</h3>
             
             <div style="text-align: center;">
-                <img id="photo" width="120" style="border-radius:50%; border: 3px solid #003366;">
+                <img id="photo" width="120" style="border-radius:50%; border: 3px solid #003366; width:120px; height:120px; object-fit:cover;">
             </div>
             
             <div class="worker-info">
@@ -647,9 +650,9 @@ button:active {
     <div style="margin: 20px 0;">
         <h4>Recent Activities</h4>
         <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
-            <p>• 10:30 AM - Verification for Passport: A07623450</p>
-            <p>• 10:15 AM - Verification for Passport: B12345678</p>
-            <p>• 09:45 AM - Verification for Passport: C87654321</p>
+            <p>• 10:30 AM - Verification for Passport: A00505303</p>
+            <p>• 10:15 AM - Verification for Passport: A18662134</p>
+            <p>• 09:45 AM - Verification for Passport: A01020480</p>
             <p>• 09:20 AM - Admin Login from IP: 192.168.1.100</p>
         </div>
     </div>
@@ -659,7 +662,7 @@ button:active {
 </div>
 
 <script>
-// 10 Workers Data
+// 10 Workers Data with direct photo URLs
 let workers = [
     {
         passport: "A00505303",
@@ -695,7 +698,7 @@ let workers = [
         name: "MD JAHANGIR ALAM",
         nation: "Bangladeshi",
         position: "Harvesting Specialist",
-        photo: "4"
+        photo: "https://images.unsplash.com-1506794778202-pad96-9f0c6b?w=150&h=150&fit=crop"
     },
     {
         passport: "E34567890",
@@ -704,7 +707,7 @@ let workers = [
         name: "MD ROFIQUL ISLAM",
         nation: "Bangladeshi",
         position: "Packing Supervisor",
-        photo: "5"
+        photo: "https://images.unsplash-1519085360753-af7439de79d5?w=150&h=150&fit=crop"
     },
     {
         passport: "F45678901",
@@ -713,7 +716,7 @@ let workers = [
         name: "MD ABDUL KARIM",
         nation: "Bangladeshi",
         position: "Mushroom Cultivator",
-        photo: "6"
+        photo: "https://images.unsplash-1504257432389-52343af06e19?w=150&h=150&fit=crop"
     },
     {
         passport: "G56789012",
@@ -722,7 +725,7 @@ let workers = [
         name: "MD NURUL ISLAM",
         nation: "Bangladeshi",
         position: "Irrigation Specialist",
-        photo: "7"
+        photo: "https://images.unsplash-1500648767791-00dcc994a43e?w=150&h=150&fit=crop"
     },
     {
         passport: "H67890123",
@@ -731,7 +734,7 @@ let workers = [
         name: "MD FARUK HOSSAIN",
         nation: "Bangladeshi",
         position: "Equipment Operator",
-        photo: "8"
+        photo: "https://images.unsplash-1492562080023-ab3db95bf3ce?w=150&h=150&fit=crop"
     },
     {
         passport: "I78901234",
@@ -740,7 +743,7 @@ let workers = [
         name: "MD BILLAL HOSSAIN",
         nation: "Bangladeshi",
         position: "Maintenance Technician",
-        photo: "9"
+        photo: "https://images.unsplash-1501196353491-d1fbeb0aac30?w=150&h=150&fit=crop"
     },
     {
         passport: "J89012345",
@@ -749,7 +752,7 @@ let workers = [
         name: "MD MOSTAFIZUR RAHMAN",
         nation: "Bangladeshi",
         position: "Senior Farm Manager",
-        photo: "10"
+        photo: "https://images.unsplash-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
     }
 ];
 
@@ -779,8 +782,8 @@ function verify() {
             document.getElementById('resPermit').innerText = worker.permit;
             document.getElementById('position').innerText = worker.position;
 
-            document.getElementById('photo').src = "https://randomuser.me/api/portraits/men/" + 
-                (parseInt(worker.photo) + 20) + ".jpg";
+            // Set the direct photo URL
+            document.getElementById('photo').src = worker.photo;
 
             const qrcodeDiv = document.getElementById('qrcode');
             qrcodeDiv.innerHTML = "";
@@ -873,6 +876,7 @@ function printIDCard() {
                     height: 120px;
                     border-radius: 50%;
                     border: 3px solid #003366;
+                    object-fit: cover;
                 }
                 .info {
                     margin: 15px 0;
